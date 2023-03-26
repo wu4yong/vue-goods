@@ -1,87 +1,51 @@
 <!-- 页面区域 -->
 <template>
-  <div>
-    <!--楼层-->
-    <div class="floor">
-      <div class="py-container">
-        <div class="title clearfix">
-          <h3 class="fl">{{ list.name }}</h3>
-          <div class="fr">
-            <ul class="nav-tabs clearfix">
-              <li class="active">
-                <a href="#tab1" data-toggle="tab">热门</a>
-              </li>
-              <li>
-                <a href="#tab2" data-toggle="tab">大家电</a>
-              </li>
-              <li>
-                <a href="#tab3" data-toggle="tab">生活电器</a>
-              </li>
-              <li>
-                <a href="#tab4" data-toggle="tab">厨房电器</a>
-              </li>
-              <li>
-                <a href="#tab5" data-toggle="tab">应季电器</a>
-              </li>
-              <li>
-                <a href="#tab6" data-toggle="tab">空气/净水</a>
-              </li>
-              <li>
-                <a href="#tab7" data-toggle="tab">高端电器</a>
-              </li>
-            </ul>
-          </div>
+  <div class="floor">
+    <div class="py-container">
+      <div class="title clearfix">
+        <h3 class="fl">{{ list.name }}</h3>
+        <div class="fr">
+          <ul class="nav-tabs clearfix">
+            <li v-for="(nav, index) in list.navList" :key="index">
+              <a href="#tab1" data-toggle="tab">{{ nav.text }}</a>
+            </li>
+          </ul>
         </div>
-        <div class="tab-content">
-          <div class="tab-pane">
-            <div class="floor-1">
-              <div class="blockgary">
-                <ul class="jd-list">
-                  <li v-for="(keywords,index) in list.keywords" :key="keywords.id">{{keywords}}</li>
-                </ul>
-                <img :src="list.imgUrl" />
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane">
+          <div class="floor-1">
+            <div class="blockgary">
+              <ul class="jd-list">
+                <li v-for="(keyword, index) in list.keywords" :key="index">
+                  {{ keyword }}
+                </li>
+              </ul>
+              <img :src="list.imgUrl" />
+            </div>
+            <div class="floorBanner">
+              <!-- 轮播图的地方 -->
+               <Carsousel :list="list.carouselList" />
+            </div>
+            <div class="split">
+              <span class="floor-x-line"></span>
+              <div class="floor-conver-pit">
+                <img :src="list.recommendList[0]" />
               </div>
-              <div class="floorBanner">
-                <div class="swiper-container" id="floor1Swiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <img src="./images/floor-1-b01.png" />
-                    </div>
-                    <!-- <div class="swiper-slide">
-                      <img src="./images/floor-1-b02.png" />
-                    </div>
-                    <div class="swiper-slide">
-                      <img src="./images/floor-1-b03.png" />
-                    </div> -->
-                  </div>
-                  <!-- 如果需要分页器 -->
-                  <div class="swiper-pagination"></div>
-
-                  <!-- 如果需要导航按钮 -->
-                  <div class="swiper-button-prev"></div>
-                  <div class="swiper-button-next"></div>
-                </div>
+              <div class="floor-conver-pit">
+                <img :src="list.recommendList[1]" />
               </div>
-              <div class="split">
-                <span class="floor-x-line"></span>
-                <div class="floor-conver-pit">
-                  <img src="./images/floor-1-2.png" />
-                </div>
-                <div class="floor-conver-pit">
-                  <img src="./images/floor-1-3.png" />
-                </div>
+            </div>
+            <div class="split center">
+              <img :src="list.bigImg" />
+            </div>
+            <div class="split">
+              <span class="floor-x-line"></span>
+              <div class="floor-conver-pit">
+                <img :src="list.recommendList[2]" />
               </div>
-              <div class="split center">
-                <img src="./images/floor-1-4.png" />
-              </div>
-              <div class="split">
-                <span class="floor-x-line"></span>
-                <div class="floor-conver-pit">
-                  <img src="./images/floor-1-5.png" />
-                </div>
-                <div class="floor-conver-pit">
-                  <img src="./images/floor-1-6.png" />
-                </div>
+              <div class="floor-conver-pit">
+                <img :src="list.recommendList[3]" />
               </div>
             </div>
           </div>
@@ -96,6 +60,12 @@
 export default {
   name: "Floor",
   props: ["list"],
+    //组件挂载完毕的地方
+    mounted() {
+    //第一次书写Swiper的时候：在mounted当中书写是不可以的，但是为什么现在这里可以啦！
+    //第一次书写轮播图的时候，是在当前组件内部发请求、动态渲染解构【前台至少服务器数据需要回来】，因此当年的写法在这里不行
+    //现在的这种写法为什么可以：因为请求是父组件发的，父组件通过props传递过来的，而且结构都已经有了的情况下执行mounted
+  },
 };
 </script>
 

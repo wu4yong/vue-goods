@@ -6,8 +6,10 @@ Vue.config.productionTip = false;
 
 //定义全局组件：在入口文件注册一次之后，在任何组件当中都可以使用
 import TypeNav from "@/components/TypeNav";
+import Carsousel from "@/components/Carousel";
 //全局组件：第一个参数 组件名字  第二个参数：那个组件
 Vue.component(TypeNav.name, TypeNav);
+Vue.component(Carsousel.name, Carsousel);
 
 //引入路由相关文件
 import router from "@/router";
@@ -33,4 +35,5 @@ new Vue({
   //在入口文件这里注册store,在每一个组件的身上都拥有一个$store这个属性
   store,
   TypeNav,
+  Carsousel
 }).$mount("#app");

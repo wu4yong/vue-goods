@@ -1,10 +1,12 @@
+<!-- 页面区域 -->
 <template>
   <div class="swiper-container" ref="cur">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(carousel, index) in list" :key="carousel.id"></div>
+      <div class="swiper-slide" v-for="(carousel, index) in list" :key="carousel.id">
         <img :src="carousel.imgUrl" />
       </div>
     </div>
+
     <!-- 如果需要分页器 -->
     <div class="swiper-pagination"></div>
 
@@ -14,9 +16,11 @@
   </div>
 </template>
 
+<!-- 组件区域 -->
 <script>
 //引入Swiper
 import Swiper from "swiper";
+
 export default {
   name: "Carsousel",
   props: ["list"],
@@ -49,4 +53,5 @@ export default {
 };
 </script>
 
+<!-- 样式区域 -->
 <style scoped></style>
