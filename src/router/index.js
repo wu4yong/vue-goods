@@ -37,7 +37,7 @@ VueRouter.prototype.push = function (location, resolve, reject) {
 };
 
 //重写VueRouter.prototype身上的replace方法了
-VueRouter.prototype.replace = function(location, resolve, reject) {
+VueRouter.prototype.replace = function (location, resolve, reject) {
   if (resolve && reject) {
     originReplace.call(this, location, resolve, reject);
   } else {
@@ -61,7 +61,8 @@ export default new VueRouter({
     },
     {
       // parm写法
-      path: "/search/:keyword",
+      // path: "/search/:keyword",
+      path: "/search/",
       component: Search,
       meta: { isShow: true },
       name: "search",

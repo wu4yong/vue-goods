@@ -17,10 +17,14 @@
       </nav> -->
       <!-- 三级联动 -->
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @click="goSearch">
           <div class="item" v-for="(c1,index) in categoryList" :key="c1.categoryId" :class="{cur:currentIndex == index}"   >
             <h3 @mouseenter="changeIndex(index)" @mouseleave="leaveIndex" >
-              <a href="">{{ c1.categoryName }}</a>
+              <!-- <a href="">{{ c1.categoryName }}</a> -->
+               <!-- 声明式导航<router-link>  -->
+              <!-- <router-link to="/search">{{ c1.categoryName }}</router-link> -->
+              <a :data-categoryId1="c1.categoryId" :data-categoryName="c1.categoryName">{{ c1.categoryName }}</a>
+
             </h3>
 
             <!--二级 三级分类-->
@@ -28,11 +32,17 @@
               <div class="subitem" v-for="(c2,index) in c1.categoryChild" :key="c2.categoryId">
                 <dl class="fore">
                   <dt>
-                    <a href="">{{ c2.categoryName }}</a>
+                    <!-- <a href="">{{ c2.categoryName }}</a> -->
+                       <!-- 声明式导航<router-link>  -->
+                    <!-- <router-link to="/search">{{ c2.categoryName }}</router-link> -->
+                    <a :data-categoryId2="c2.categoryId" :data-categoryName="c2.categoryName">{{ c2.categoryName }}</a>
                   </dt>
                   <dd>
                     <em v-for="(c3,index) in c2.categoryChild" :key="c3.categoryId" >
-                      <a href="">{{ c3.categoryName }}</a>
+                      <!-- <a href="">{{ c3.categoryName }}</a> -->
+                       <!-- 声明式导航<router-link>  -->
+                      <!-- <router-link to="/search">{{ c3.categoryName }}</router-link> -->
+                      <a :data-categoryId3="c3.categoryId" :data-categoryName="c3.categoryName">{{ c3.categoryName }}</a>
                     </em>
                   </dd>
                 </dl>
@@ -1724,6 +1734,41 @@ export default {
     // 一级菜单鼠标移除事件的回调
     leaveIndex(){
       this.currentIndex = -1
+    },
+    goSearch(event){
+        // 最好的解决方案：编程式导航+事件委派
+        // 存在一些问题:事件委派，是把全部子节点的【h3,dt,dl,em】的事件节点委派给父亲节节点
+        // 点击a标签的时候，才会进行路由的跳转【怎么能确定点击的一定a标签】
+        //存在另外一个问题：即使你能确定点击的是a标签，如何区分一级、二级、三级分类的标签
+
+      // 第一个问题：把子节点当做的a标签，自定义属性data-categoryName，其余的子节点是没有的
+      let element = event.target;
+      // 获取到当前出发这个时间的节点【h3,dt,dl,em】,需要带有data-categoryname的节点【一定是a标签】
+      // 节点有一个数下dataset属性，可以获取节点的自定义属性与属性值
+      // let { categoryname,categoryId1,categoryId2,categoryId3} = element.dataset;
+      let { categoryname,categoryid1,categoryid2,categoryid3} = element.dataset;
+  
+      if (categoryname) {
+        // 整理路由跳转的参数
+        let location = { name: "search" };
+        let query = { categoryname: categoryname };
+        //如何确定 一级分类、二级分类、三级分类
+        if (categoryid1) {
+          query.categoryid1 = categoryid1;
+        } else if (categoryid2) {
+          query.categoryid2 = categoryid2;
+        } else if (categoryid3) {
+          query.categoryid3 = categoryid3;
+        } else {
+          console.log("其他");
+        }
+
+        // 整理完参数
+        location.query = query;
+        // console.log(location);
+        // 路由跳转
+        this.$router.push(location);
+      }
     }
   }
 };
