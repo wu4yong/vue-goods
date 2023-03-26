@@ -16,7 +16,7 @@
         <a href="###">秒杀</a>
       </nav> -->
       <!-- 三级联动 -->
-      <div class="sort">
+      <div class="sort" v-show="isShow">
         <div class="all-sort-list2" @click="goSearch">
           <div class="item" v-for="(c1,index) in categoryList" :key="c1.categoryId" :class="{cur:currentIndex == index}"   >
             <h3 @mouseenter="changeIndex(index)" @mouseleave="leaveIndex" >
@@ -1707,13 +1707,24 @@ export default {
   data(){
     return {
       // 存储用户鼠标移动到哪个一级分类
-      currentIndex: -1
+      currentIndex: -1,
+      // 控制home隐藏与显示属性
+      isShow: true
     }
   },
   // 组件挂载完毕，可以向服务器发送请求
   mounted() {
     // console.log("组件挂载完毕，可以向服务器发送请求!");
-    this.$store.dispatch("categoryList");
+    // 此处移除，移动代码到app组件，让请求只发送1次
+    // this.$store.dispatch("categoryList");
+
+
+    // 如果不是home路由组件，将typeNav影藏
+    if(this.$route.path != '/home'){
+      // 当组件挂载完毕，让isShow变为false
+      this.isShow = false
+    }
+
   },
   computed: {
     ...mapState({

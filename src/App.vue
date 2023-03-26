@@ -20,6 +20,11 @@ export default {
     Header,
     Footer,
   },
+  mounted(){
+    // console.log("组件挂载完毕，可以向服务器发送请求!");
+    // 派发一个action请求|| 获取商品分类的三级列表数据
+    this.$store.dispatch("categoryList");
+  }
 };
 </script>
 
