@@ -8,8 +8,8 @@
           <!--banner轮播-->
           <div class="swiper-container" id="mySwiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <img src="./images/banner1.jpg" />
+              <div class="swiper-slide" v-for="(carousel,index) in bannerList" :key="carousel.id">
+                <img :src="carousel.imgUrl" />
               </div>
               <!-- <div class="swiper-slide">
                 <img src="./images/banner2.jpg" />
@@ -21,6 +21,7 @@
                 <img src="./images/banner4.jpg" />
               </div> -->
             </div>
+            
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
 
@@ -105,8 +106,22 @@
 
 <!-- 组件区域 -->
 <script>
+// 从仓库中获取数据
+import { mapState } from "vuex";
+
 export default {
   name: "ListContainer",
+  // 组件加载完毕,向服务器派发action获取数据
+  // 通过Vuex发起ajax请求，将数据存储在store仓库中（此处用的mock请求）
+  mounted(){
+    this.$store.dispatch("getBannerList");
+  },
+    computed: {
+    ...mapState({
+
+      bannerList: state => state.home.bannerList,
+    }),
+  },
 };
 </script>
 

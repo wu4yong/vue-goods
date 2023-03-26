@@ -13,10 +13,15 @@ Vue.component(TypeNav.name, TypeNav);
 import router from "@/router";
 //引入仓库进行注册
 import store from "@/store";
+//引入swiper轮播样式
+import "swiper/css/swiper.css";
 
 // 测试接口
 // import { reqgetCategoryList } from "@/api";
 // reqgetCategoryList();
+
+//引入MockServer.js----mock数据
+import "@/mock/mockServe";
 
 new Vue({
   render: (h) => h(App),

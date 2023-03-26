@@ -1,17 +1,23 @@
 // 引入请求
-import { reqGetCategoryList } from "@/api";
+import { reqGetCategoryList,reqGetBannerList } from "@/api";
 
 // home模块的小仓库
 const state = {
   // state 中默认的数据不能瞎写
-  categoryList:[]
+  // home仓库存储三级菜单的数据
+  categoryList:[],
+  // 轮播图的数据
+  bannerList:[]
 };
 
 // mutations 修改state的唯一手段
 const mutations = {
-  CategoryList(state, categoryList) {
+  CATEGORYLIST(state, categoryList) {
     // console.log("mutations 接收的参数:"+categoryList);
     state.categoryList = categoryList;
+  },
+  GETBANNERLIST(state, bannerList) {
+    state.bannerList = bannerList;
   },
 };
 
@@ -23,10 +29,22 @@ const actions = {
     let result = await reqGetCategoryList();
     if (result.code == 200) {
       // console.log("准备修改仓库数据");
-      commit("CategoryList", result.data);
+      commit("CATEGORYLIST", result.data);
     }
   },
+
+  // 获取首页轮播图片数据
+  async getBannerList({ commit }) {
+    let result = await reqGetBannerList();
+    if (result.code == 200) {
+      // console.log(result);
+      commit("GETBANNERLIST", result.data);
+    }
+  },
+
+
 };
+
 
 // getters 理解为计算属性，用于简化仓库数据，让组件获取仓库的数据更加方便
 const getters = {};
