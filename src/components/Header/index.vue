@@ -72,7 +72,14 @@ export default {
       // // 第二种: 模版字符串
       // this.$router.push("`/search/{this.keyword}`");
       // 第三种写法: 对象写法
-      this.$router.push({name:"search",params:{keyword:this.keyword}})
+      // this.$router.push({name:"search",params:{keyword:this.keyword}})
+
+      //合并参数 代表的是如果有query参数也带过去
+      if (this.$route.query) {
+        let loction = {name: "search", params: { keyword: this.keyword || undefined }};
+        loction.query = this.$route.query;
+        this.$router.push(loction);
+      }
     },
   },
 };

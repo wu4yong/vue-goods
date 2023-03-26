@@ -61,8 +61,8 @@ export default new VueRouter({
     },
     {
       // parm写法
-      // path: "/search/:keyword",
-      path: "/search/",
+      // path: "/search/",
+      path: "/search/:keyword",
       component: Search,
       meta: { isShow: true },
       name: "search",
