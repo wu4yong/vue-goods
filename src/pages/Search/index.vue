@@ -1,9 +1,8 @@
 <!-- 页面区域 -->
 <template>
-  <div>我是搜索
-    <br/>
-    parms传递参数：{{ $route.params.keyword }}
-  
+  <div>
+    <!-- 我是搜索模块 -->
+    <Type-Nav></Type-Nav>
   </div>
 </template>
 
